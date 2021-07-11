@@ -1,6 +1,7 @@
 import 'dart:ffi';
-
+import 'package:todoey/widgets/tasks_list.dart';
 import 'package:flutter/material.dart';
+import 'package:todoey/screens/add_task_screen.dart';
 
 class TasksScreen extends StatelessWidget {
   final List myTaskList = ['Apfel', 'Birne', 'Banane'];
@@ -10,7 +11,10 @@ class TasksScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.lightBlueAccent,
       floatingActionButton: FloatingActionButton(
-        onPressed: null,
+        onPressed: () {
+          showModalBottomSheet(
+              context: context, builder: (BuildContext context) => AddTaskScreen());
+        },
         backgroundColor: Colors.lightBlueAccent,
         child: Icon(Icons.add, size: 40.0),
       ),
@@ -19,7 +23,7 @@ class TasksScreen extends StatelessWidget {
         children: [
           Container(
             padding: EdgeInsets.only(
-                top: 60.0, left: 30.0, right: 30.0, bottom: 30.0),
+                top: 60.0, left: 20.0, right: 20.0, bottom: 30.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -42,41 +46,18 @@ class TasksScreen extends StatelessWidget {
           ),
           Expanded(
             child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20.0),
+              padding: EdgeInsets.symmetric(horizontal: 20.0),
               height: 300.0,
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20.0),
                       topRight: Radius.circular(20.0))),
-              child: TasksList(myTaskList: myTaskList),
+              child: TasksList(),
             ),
           ),
         ],
       ),
     );
-  }
-}
-
-class TasksList extends StatelessWidget {
-  const TasksList({
-    Key? key,
-    required this.myTaskList,
-  }) : super(key: key);
-
-  final List myTaskList;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(children: <Widget>[
-      for (var myTask in myTaskList)
-        ListTile(
-            title: Text('$myTask',
-                style: TextStyle(color: Colors.black)),
-            trailing: Checkbox(
-              value: false,
-              onChanged: null,
-            )),
-    ]);
   }
 }
